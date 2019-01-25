@@ -1,19 +1,75 @@
 {
-  "name": "rn-app-update",
-  "version": "0.0.1",
+  "_args": [
+    [
+      {
+        "raw": "rn-app-update",
+        "scope": null,
+        "escapedName": "rn-app-update",
+        "name": "rn-app-update",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "F:\\011_ZWAPP_ChangshaLiuyangZWAPP\\ChangshaLiuyangZWAPP"
+    ]
+  ],
+  "_cnpm_publish_time": 1548222814003,
+  "_from": "rn-app-update@latest",
+  "_id": "rn-app-update@0.0.1",
+  "_inCache": true,
+  "_location": "/rn-app-update",
+  "_nodeVersion": "9.2.1",
+  "_npmUser": {
+    "name": "egov",
+    "email": "zhixiong.zhu@chinacreator.com"
+  },
+  "_npmVersion": "4.1.2",
+  "_phantomChildren": {},
+  "_publish_on_cnpm": true,
+  "_requested": {
+    "raw": "rn-app-update",
+    "scope": null,
+    "escapedName": "rn-app-update",
+    "name": "rn-app-update",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://npm.c2cloud.cn/rn-app-update/download/rn-app-update-0.0.1.tgz",
+  "_shasum": "09f8b4487834d2c35cb847212e6fc2754bb7deea",
+  "_shrinkwrap": null,
+  "_spec": "rn-app-update",
+  "_where": "F:\\011_ZWAPP_ChangshaLiuyangZWAPP\\ChangshaLiuyangZWAPP",
+  "author": "",
+  "dependencies": {},
   "description": "",
+  "devDependencies": {},
+  "dist": {
+    "shasum": "09f8b4487834d2c35cb847212e6fc2754bb7deea",
+    "size": 55030,
+    "key": "/rn-app-update/-/rn-app-update-0.0.1.tgz",
+    "tarball": "http://npm.c2cloud.cn/rn-app-update/download/rn-app-update-0.0.1.tgz"
+  },
+  "gitHead": "8a40b36941b63f3e14af6806eca5f7b346827d72",
+  "license": "ISC",
   "main": "index.js",
+  "maintainers": [
+    {
+      "name": "egov",
+      "email": "zhixiong.zhu@chinacreator.com"
+    }
+  ],
+  "name": "rn-app-update",
+  "optionalDependencies": {},
+  "publish_time": 1548222814003,
+  "readme": "ERROR: No README data found!",
+  "readmeFilename": "readme.md",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tielan/rn-app-update.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tielan/rn-app-update/issues"
-  },
-  "homepage": "https://github.com/tielan/rn-app-update#readme"
+  "version": "0.0.1"
 }
