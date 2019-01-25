@@ -6,16 +6,37 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import {
+  Button,
+  StyleSheet,
+  View,
+  NativeModules
+} from 'react-native';
+
+var RNAppUpdate = NativeModules.RNAppUpdate
 
 export default class App extends Component {
+
+  async onUpdateAction() {
+    let result = await fetch('http://api.zwfw.hunan.gov.cn/appVersion/checkoutNewApp', {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        "x-api-key": 'TibfxU7UibQXWojJc2dx2cRQ'
+      }
+    }).then((response) => response.json());
+    console.log(result);
+    RNAppUpdate.update(Object.assign({}, {
+      downloadUrl: 'http://api.zwfw.hunan.gov.cn/minio/apk/download?url='+result.filePath,
+      xApiKey: 'TibfxU7UibQXWojJc2dx2cRQ'
+    }, result));
+  }
   render() {
     return (
       <View style={styles.container}>
-         <Button title="点击" onPress={()=>{
-           
-         }}></Button>
+        <Button title="点击" onPress={this.onUpdateAction}></Button>
       </View>
     );
   }
