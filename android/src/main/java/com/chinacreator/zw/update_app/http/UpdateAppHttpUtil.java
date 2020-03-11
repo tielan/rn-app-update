@@ -1,8 +1,11 @@
 package com.chinacreator.zw.update_app.http;
 
-import android.support.annotation.NonNull;
 
-import com.chinacreator.zw.update_app.HttpManager;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.vector.update_app.HttpManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -21,6 +24,13 @@ import okhttp3.Response;
  */
 
 public class UpdateAppHttpUtil implements HttpManager {
+
+    private String mApiKey;
+
+    public UpdateAppHttpUtil(String mApiKey) {
+        this.mApiKey = mApiKey;
+    }
+
     /**
      * 异步get
      *
@@ -29,13 +39,12 @@ public class UpdateAppHttpUtil implements HttpManager {
      * @param callBack 回调
      */
     @Override
-    public void asyncGet(@NonNull String url, @NonNull Map<String, String> params,Map<String, String> headers, @NonNull final Callback callBack) {
-        if(headers == null){
-            headers = new HashMap<>();
-        }
+    public void asyncGet(@NonNull String url, @NonNull Map<String, String> params, @NonNull final HttpManager.Callback callBack) {
+        Map<String, String> headers = new HashMap<>();
         headers.put("accept","application/json");
         headers.put("content-type","application/json");
         headers.put("credentials","include");
+        headers.put("x-api-key",mApiKey);
         OkHttpUtils.get()
                 .url(url)
                 .params(params)
@@ -44,11 +53,13 @@ public class UpdateAppHttpUtil implements HttpManager {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Response response, Exception e, int id) {
+                        Log.d("UpdateApp",e.getMessage());
                         callBack.onError(validateError(e, response));
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
+                        Log.d("UpdateApp",response);
                         callBack.onResponse(response);
                     }
                 });
@@ -62,13 +73,12 @@ public class UpdateAppHttpUtil implements HttpManager {
      * @param callBack 回调
      */
     @Override
-    public void asyncPost(@NonNull String url, @NonNull Map<String, String> params,Map<String, String> headers, @NonNull final Callback callBack) {
-        if(headers == null){
-            headers = new HashMap<>();
-        }
+    public void asyncPost(@NonNull String url, @NonNull Map<String, String> params,@NonNull final Callback callBack) {
+        Map<String, String> headers = new HashMap<>();
         headers.put("accept","application/json");
         headers.put("content-type","application/json");
         headers.put("credentials","include");
+        headers.put("x-api-key",mApiKey);
         OkHttpUtils.post()
                 .url(url)
                 .params(params)
@@ -77,11 +87,14 @@ public class UpdateAppHttpUtil implements HttpManager {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Response response, Exception e, int id) {
+                        Log.d("UpdateApp",e.getMessage());
+
                         callBack.onError(validateError(e, response));
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
+                        Log.d("UpdateApp",response);
                         callBack.onResponse(response);
                     }
                 });
@@ -97,18 +110,17 @@ public class UpdateAppHttpUtil implements HttpManager {
      * @param callback 回调
      */
     @Override
-    public void download(@NonNull String url, @NonNull String path, @NonNull String fileName,Map<String, String> headers, @NonNull final FileCallback callback) {
-        if(headers == null){
-            headers = new HashMap<>();
-        }
+    public void download(@NonNull String url, @NonNull String path, @NonNull String fileName, @NonNull final FileCallback callback) {
+        Map<String, String> headers = new HashMap<>();
         headers.put("accept","application/octet-stream");
         headers.put("credentials","include");
-        OkHttpUtils.getInstance().timeout(120*1000);
-        OkHttpUtils.getInstance().debug(true,"down");
+        headers.put("x-api-key",mApiKey);
         OkHttpUtils.get()
                 .url(url)
                 .headers(headers)
                 .build()
+                .connTimeOut(30*1000)
+                .readTimeOut(30*1000)
                 .execute(new FileCallBack(path, fileName) {
                     @Override
                     public void inProgress(float progress, long total, int id) {

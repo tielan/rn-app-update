@@ -9,9 +9,9 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <application>
-        <service android:name="com.chinacreator.zw.update_app.service.DownloadService"/>
+        <service android:name="com.vector.update_app.service.DownloadService"/>
         <provider
-            android:name="com.chinacreator.zw.update_app.UpdateFileProvider"
+            android:name="com.vector.update_app.UpdateFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
