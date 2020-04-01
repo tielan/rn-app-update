@@ -17,7 +17,24 @@ export default class UpdateManager {
 
     }
     //手动检测更新
-    static check() {
+    static check({ mainUrl, apiKey = "0", orgId, callback }) {
+        if (Platform.OS === 'android') {
+            if (mainUrl && orgId) {
+                UpdateManagerModule.check({ mainUrl, apiKey, orgId }, callback);
+            }
+        } else if (Platform.OS === 'ios') {
 
+        }
+
+    }
+
+    //获取版本
+    static loadVersion(callback) {
+        if (Platform.OS === 'android') {
+            UpdateManagerModule.loadVersion(callback);
+        } else if (Platform.OS === 'ios') {
+
+        }
+        
     }
 }

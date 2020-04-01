@@ -8,11 +8,13 @@ import android.text.TextUtils;
 import com.chinacreator.zw.update_app.http.UpdateAppHttpUtil;
 import com.chinacreator.zw.update_app.http.ZWSilenceUpdateCallback;
 import com.chinacreator.zw.update_app.http.ZWUpdateCallback;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 import com.vector.update_app.SilenceUpdateCallback;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
@@ -89,12 +91,13 @@ public class UpdateManagerModule extends ReactContextBaseJavaModule {
 
                     @Override
                     protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-                        callback.invoke(true);
+                        callback.invoke(true,updateApp.getOriginRes());
+                        updateAppManager.showDialogFragment();
                     }
 
                     @Override
                     protected void noNewApp(String error) {
-                        callback.invoke(false);
+                        callback.invoke(false,error);
                     }
                 });
 
@@ -142,12 +145,35 @@ public class UpdateManagerModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void loadVersion(Callback callback){
+        if(callback != null){
+            WritableMap map = Arguments.createMap();
+            map.putInt("versionCode", packageCode(mReactContext));
+            map.putString("versionName", packageVersionName(mReactContext));
+            callback.invoke(map);
+        }
+    }
+
+
     public static int packageCode(Context context) {
         PackageManager manager = context.getPackageManager();
         int name = 0;
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             name = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+    public static String packageVersionName(Context context) {
+        PackageManager manager = context.getPackageManager();
+        String name = "";
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            name = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
